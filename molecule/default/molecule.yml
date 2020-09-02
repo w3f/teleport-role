@@ -8,5 +8,13 @@ platforms:
     image: ubuntu:bionic
 provisioner:
   name: ansible
+scenario:
+  name: default
+  test_sequence:
+    - destroy
+    - create
+    - converge
+    - lint
+    - verify
 verifier:
   name: ansible
