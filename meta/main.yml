@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Infrastructure Team <devops@web3.foundation>
+  description: SWetup teleport nodes
+  company: Web3 Foundation
+
+  license: Apache-2.0
+
+  min_ansible_version: 2.9
+
+  galaxy_tags: []
+
+dependencies: []
