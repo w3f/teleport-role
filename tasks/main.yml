@@ -1,0 +1,50 @@
+- name: Check if teleport is installed.
+  stat: "path=/usr/local/bin/teleport"
+  register: teleport_bin
+
+- name: Install make.
+  package:
+    name: make
+    state: present
+
+- name: Unarchive teleport.
+  unarchive:
+    src: "{{ teleport_url }}"
+    dest: /tmp
+    remote_src: yes
+  when: not teleport_bin.stat.exists
+
+- name: Install teleport.
+  command: >
+    ./install
+    chdir=/tmp/teleport
+  become: yes
+  when: not teleport_bin.stat.exists
+
+- name: Create teleport config.
+  template:
+    src: "teleport.yaml.j2"
+    dest: "{{ teleport_config_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0600
+
+- name: Create teleport service (systemd).
+  template:
+    src: "teleport.service.j2"
+    dest: "/etc/systemd/system/teleport.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  register: service_installed
+
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
+  become: yes
+  when: service_installed.changed
+
+- name: Ensure teleport has selected state and enabled on boot.
+  systemd:
+    name: 'teleport'
+    state: 'started'
+    enabled: yes
