@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include teleport"
+      include_role:
+        name: "teleport-role"
