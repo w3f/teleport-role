@@ -6,6 +6,7 @@ jobs:
       - image: web3f/ansible:v0.2.0
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Run tests
           command: |
