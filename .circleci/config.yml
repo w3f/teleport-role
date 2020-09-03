@@ -19,7 +19,8 @@ jobs:
       - run:
           name: Publish role
           command: |
-              ansible...
+            ansible-galaxy login --github-token=$GITHUB_BOT_TOKEN
+            ansible-galaxy role import w3fbot --role-name teleport w3f/teleport-role -vvvvvvv
 
 workflows:
   version: 2
@@ -30,7 +31,7 @@ workflows:
             tags:
               only: /.*/
       - publishRole:
-          context: ansible-galaxy-bot
+          context: github-bot
           filters:
             tags:
               only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
