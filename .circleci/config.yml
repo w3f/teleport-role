@@ -1,0 +1,41 @@
+version: 2
+
+jobs:
+  tests:
+    docker:
+      - image: web3f/ansible:v0.2.0
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Run tests
+          command: |
+            molecule test
+
+  publishRole:
+    docker:
+      - image: web3f/ansible:v0.2.0
+    steps:
+      - checkout
+      - run:
+          name: Publish role
+          command: |
+            scripts/galaxy-publish.sh teleport w3f/teleport-role
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - tests:
+          filters:
+            tags:
+              only: /.*/
+      - publishRole:
+          context: github-bot
+          filters:
+            tags:
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+            branches:
+              ignore: /.*/
+          requires:
+            - tests

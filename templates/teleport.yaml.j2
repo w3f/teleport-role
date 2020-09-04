@@ -1,0 +1,53 @@
+teleport:
+  nodename: {{ teleport_nodename }}
+{% if teleport_auth_token %}
+  auth_token: "{{ teleport_auth_token }}"
+{% endif %}
+  auth_servers:
+{% for auth_server in teleport_auth_servers %}
+  - "{{ auth_server }}"
+{% endfor %}
+log:
+  output: syslog
+  severity: {{ teleport_log_level }}
+
+auth_service:
+{% if teleport_auth_enabled | default(false) %}
+  enabled: "yes"
+  listen_addr: "{{ teleport_auth_listen_address }}"
+  cluster_name: {{ teleport_auth_cluster_name }}
+  {% if teleport_auth_tokens_node|length > 0 or teleport_auth_tokens_proxy|length > 0 or teleport_auth_tokens_auth|length > 0 %}
+  tokens:
+  {% for token in teleport_auth_tokens_node %}
+  - "node:{{ token }}"
+  {% endfor %}
+  {% for token in teleport_auth_tokens_proxy %}
+  - "proxy:{{ token }}"
+  {% endfor %}
+  {% for token in teleport_auth_tokens_auth %}
+  - "auth:{{ token }}"
+  {% endfor %}
+  {% endif %}
+{% else %}
+  enabled: "no"
+{% endif %}
+ssh_service:
+{% if teleport_ssh_enabled | default(false) %}
+  enabled: "yes"
+  listen_addr: "{{ teleport_ssh_listen_address }}"
+{% else %}
+  enabled: "no"
+{% endif %}
+proxy_service:
+{% if teleport_proxy_enabled | default(false) %}
+  enabled: "yes"
+  listen_addr: "{{ teleport_proxy_listen_address }}"
+  web_listen_addr: "{{ teleport_proxy_web_listen_address }}"
+  tunnel_listen_addr: "{{ teleport_proxy_tunnel_listen_address }}"
+  {% if teleport_proxy_https_key_file %}
+  https_key_file: {{ teleport_proxy_https_key_file }}
+  https_cert_file: {{ teleport_proxy_https_cert_file }}
+  {% endif %}
+{% else %}
+  enabled: "no"
+{% endif %}
