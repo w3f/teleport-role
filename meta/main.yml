@@ -1,6 +1,6 @@
 galaxy_info:
   author: Infrastructure Team <devops@web3.foundation>
-  description: SWetup teleport nodes
+  description: Setup teleport nodes
   company: Web3 Foundation
 
   license: Apache-2.0
