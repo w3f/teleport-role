@@ -20,8 +20,7 @@ jobs:
       - run:
           name: Publish role
           command: |
-            ansible-galaxy login --github-token=$GITHUB_BOT_TOKEN
-            ansible-galaxy role import w3fbot --role-name teleport w3f/teleport-role -vvvvvvv
+            scripts/galaxy-publish.sh teleport w3f/teleport-role
 
 workflows:
   version: 2
