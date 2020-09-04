@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Publish role
           command: |
-            scripts/galaxy-publish.sh teleport w3f/teleport-role
+            scripts/galaxy-publish.sh teleport teleport-role
 
 workflows:
   version: 2
