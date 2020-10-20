@@ -7,9 +7,9 @@ teleport:
 {% for auth_server in teleport_auth_servers %}
   - "{{ auth_server }}"
 {% endfor %}
-log:
-  output: syslog
-  severity: {{ teleport_log_level }}
+  log:
+    output: syslog
+    severity: {{ teleport_log_level }}
 
 auth_service:
 {% if teleport_auth_enabled | default(false) %}
