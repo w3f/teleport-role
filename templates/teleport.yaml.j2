@@ -31,6 +31,7 @@ auth_service:
 {% else %}
   enabled: "no"
 {% endif %}
+
 ssh_service:
 {% if teleport_ssh_enabled | default(false) %}
   enabled: "yes"
@@ -38,6 +39,7 @@ ssh_service:
 {% else %}
   enabled: "no"
 {% endif %}
+
 proxy_service:
 {% if teleport_proxy_enabled | default(false) %}
   enabled: "yes"
