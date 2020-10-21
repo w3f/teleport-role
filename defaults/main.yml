@@ -24,6 +24,11 @@ teleport_auth_tokens_proxy: []
 teleport_auth_tokens_auth: []
 teleport_auth_trusted_clusters: []
 teleport_auth_oidc_connectors: []
+teleport_auth_authentication_type:
+teleport_auth_authentication_second_factor:
+teleport_auth_authentication_u2f_app_id:
+teleport_auth_authentication_u2f_facets:
+
 
 # ssh service
 teleport_ssh_enabled: true

@@ -27,6 +27,18 @@ auth_service:
   {% for token in teleport_auth_tokens_auth %}
   - "auth:{{ token }}"
   {% endfor %}
+  {% if teleport_auth_authentication_type | default(False, true) %}
+  authentication:
+    type: {{ teleport_auth_authentication_type }}
+    {% if teleport_auth_authentication_second_factor | default(False, true) %}
+    second_factor: {{ teleport_auth_authentication_second_factor }}
+    {% if teleport_auth_authentication_second_factor | lower == 'u2f' %}
+    u2f:
+      app_id: {{ teleport_auth_authentication_u2f_app_id }}
+      facets: {{ teleport_auth_authentication_u2f_facets }}
+    {% endif %}
+    {% endif %}
+  {% endif %}
   {% endif %}
 {% else %}
   enabled: "no"
