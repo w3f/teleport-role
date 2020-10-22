@@ -58,6 +58,9 @@ proxy_service:
   listen_addr: "{{ teleport_proxy_listen_address }}"
   web_listen_addr: "{{ teleport_proxy_web_listen_address }}"
   tunnel_listen_addr: "{{ teleport_proxy_tunnel_listen_address }}"
+  {% if teleport_proxy_public_addr | default(False, true) %}
+  public_addr: {{ teleport_proxy_public_addr }}
+  {% endif %}
   {% if teleport_proxy_https_key_file %}
   https_key_file: {{ teleport_proxy_https_key_file }}
   https_cert_file: {{ teleport_proxy_https_cert_file }}
