@@ -24,6 +24,7 @@
     owner: "root"
     group: "root"
     mode: 0600
+  notify: reload teleport
 
 - name: Create teleport service (systemd).
   template:
