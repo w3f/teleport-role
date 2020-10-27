@@ -24,7 +24,6 @@
     owner: "root"
     group: "root"
     mode: 0600
-  notify: reload teleport
 
 - name: Create teleport service (systemd).
   template:
@@ -35,7 +34,7 @@
     mode: 0644
   register: service_installed
 
-- name: Ensure teleport enabled on boot.
+- name: Ensure teleport enabled on boot1234.
   shell: |
     systemctl daemon-reload
     systemctl enable teleport.service
