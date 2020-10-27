@@ -35,8 +35,7 @@
     mode: 0644
   register: service_installed
 
-- name: Ensure teleport has selected state and enabled on boot.
+- name: Ensure teleport enabled on boot.
   shell: |
     systemctl daemon-reload
     systemctl enable teleport.service
-    systemctl start teleport.service
