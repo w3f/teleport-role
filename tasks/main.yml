@@ -37,7 +37,4 @@
 - name: Config teleport enabled.
   shell: |
     systemctl daemon-reload
-    systemctl enable teleport.service
-    systemctl restart teleport.service
-  register: restart_teleport
-  failed_when: restart_teleport.rc != 1 and restart_teleport.rc != 0
+    systemctl enable teleport.service --now
