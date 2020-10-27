@@ -36,8 +36,7 @@
   register: service_installed
 
 - name: Ensure teleport has selected state and enabled on boot.
-  systemd:
-    name: 'teleport'
-    state: 'started'
-    enabled: yes
-    daemon_reload: "{{ service_installed.changed }}"
+  shell: |
+    systemctl daemon-reload
+    systemctl enable teleport.service
+    systemctl start teleport.service
