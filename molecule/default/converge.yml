@@ -4,4 +4,4 @@
   tasks:
     - name: "Include teleport"
       include_role:
-        name: "project"
+        name: teleport-role
